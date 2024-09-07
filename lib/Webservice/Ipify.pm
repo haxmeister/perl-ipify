@@ -1,4 +1,4 @@
-package Acme::Free::API::Ipify;
+package Webservice::Ipify;
 
 use v5.38;
 use HTTP::Tiny;
