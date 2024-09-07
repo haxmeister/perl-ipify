@@ -33,16 +33,18 @@ Acme::Free::API::Ipify - Lookup your IP address using Ipify.org
 
 =head1 SYNOPSIS
 
-  use Acme::Free::API::Ipify qw( get_ipv4 get_ipv6 get_ip );
+    use v5.40;
+    use Acme::Free::API::Ipify qw/ get_ipv4 get_ipv6 get_ip /;
 
-  # Universal: IPv4/IPv6
-  say get_ip();
+    my $response = get_ip();
+    say $response->{content} if $response->{success};
 
-  # IPv4
-  say get_ipv4();
+    my $response2 = get_ipv4();
+    say $response2->{content} if $response2->{success};
 
-  # IPv6
-  say get_ipv6();
+    my $response3 = get_ipv6();
+    say $response3->{content} if $response3->{success};
+
 
 
 =head1 DESCRIPTION
@@ -69,9 +71,7 @@ Joshua Day, E<lt>hax@cpan.orgE<gt>
 
 =head1 SOURCECODE
 
-Source code is available on my mercurial repo: L<https://cavac.at/public/mercurial/Acme-Free-API-Geodata-GeoIP/>
-
-And no, i do NOT use GitHub for my projects, so don't ask.
+Source code is available on Github.com : L<https://github.com/haxmeister/perl-ipify>
 
 =head1 COPYRIGHT AND LICENSE
 
