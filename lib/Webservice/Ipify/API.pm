@@ -1,57 +1,67 @@
-package Webservice::Ipify;
+use v5.40;
+use feature "class";
+use warnings -experimental;
 
-use v5.38;
+class Webservice::Ipify::API 1.000;
+
 use HTTP::Tiny;
-use Exporter 'import';
-our @EXPORT_OK = qw(get_ipv4 get_ipv6 get_ip);
+use JSON::PP;
+use Carp;
 
-our $VERSION = '1.0';
+my $ua  = HTTP::Tiny->new(timeout => 7);
 
-sub get_ip(){
-    return get('https://api64.ipify.org');
+
+method get_ipv4(){
+    return fetch('https://api4.ipify.org');
 }
 
-sub get_ipv4(){
-    return get('https://api.ipify.org');
+method get_ipv6(){
+    return fetch('https://api6.ipify.org');
 }
 
-sub get_ipv6(){
-    return get('https://api6.ipify.org');
+method get(){
+    return fetch('https://api64.ipify.org');
 }
 
-sub get($url){
-    my $response = HTTP::Tiny->new->get($url);
-    return  HTTP::Tiny->new->get($url);
+sub fetch($url){
+    my $response = $ua->get($url);
+    # croak on errors with nice error messages
+    if( !$response->{success}  ){
+        croak $response->{status}." ".$response->{content} ;
+    }
+
+    return $response->{content};
 }
 
-1;
+
 __END__
+
+=pod
 
 =head1 NAME
 
-Webservice::Ipify - Lookup your IP address using Ipify.org
+Webservice::Ipify::API - Lookup your IP address using Ipify.org
 
 =head1 SYNOPSIS
 
     use v5.40;
-    use Webservice::Ipify qw( get_ipv4 get_ipv6 get_ip );
+    use Webservice::Ipify::API;
 
-    my $response = get_ip();
-    say $response->{content} if $response->{success};
+    my $api = Webservice::Ipify::API->new();
 
-    my $response2 = get_ipv4();
-    say $response2->{content} if $response2->{success};
+    # Universal: IPv4/IPv6
+    say $api->get();
 
-    my $response3 = get_ipv6();
-    say $response3->{content} if $response3->{success};
+    # used for IPv4.
+    say $api->get_ipv4();
 
+    # used for IPv6 request only. If you don't have an IPv6 address, the request will fail.
+    say $api->get_ipv6();
 
 
 =head1 DESCRIPTION
 
-Look up your external IP address through a public API, see L<https://www.freepublicapis.com/ipify-api> or L<https://www.ipify.org/>.
-
-It returns a reference to a hash provided by HTTP::Tiny which makes it possible to handle errors .
+Look up your external IP address through the ipify public API via the feature "class" keyword.
 
 =head1 SEE ALSO
 
@@ -69,7 +79,7 @@ It returns a reference to a hash provided by HTTP::Tiny which makes it possible 
 
 Joshua Day, E<lt>hax@cpan.orgE<gt>
 
-=head1 SOURCECODE
+=head1 SOURCE CODE
 
 Source code is available on Github.com : L<https://github.com/haxmeister/perl-ipify>
 
