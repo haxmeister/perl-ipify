@@ -29,12 +29,12 @@ __END__
 
 =head1 NAME
 
-Acme::Free::API::Ipify - Lookup your IP address using Ipify.org
+Webservice::Ipify - Lookup your IP address using Ipify.org
 
 =head1 SYNOPSIS
 
     use v5.40;
-    use Acme::Free::API::Ipify qw/ get_ipv4 get_ipv6 get_ip /;
+    use Webservice::Ipify qw( get_ipv4 get_ipv6 get_ip );
 
     my $response = get_ip();
     say $response->{content} if $response->{success};
@@ -49,7 +49,7 @@ Acme::Free::API::Ipify - Lookup your IP address using Ipify.org
 
 =head1 DESCRIPTION
 
-This module looks up your external IP address through a public API, see L<https://www.freepublicapis.com/ipify-api> or L<https://www.ipify.org/>.
+Look up your external IP address through a public API, see L<https://www.freepublicapis.com/ipify-api> or L<https://www.ipify.org/>.
 
 It returns a reference to a hash provided by HTTP::Tiny which makes it possible to handle errors .
 
